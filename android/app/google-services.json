@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "741248829134",
+    "project_id": "login-app-cbdfb",
+    "storage_bucket": "login-app-cbdfb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:741248829134:android:e5f4f502b4921989aef29f",
+        "android_client_info": {
+          "package_name": "ex.flutter_login_page"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "741248829134-kv6tgi6blgnq25o2nhc9fn480j8pvfig.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ex.flutter_login_page",
+            "certificate_hash": "af6ee55d2616b1fd107014d03feecca2bb036235"
+          }
+        },
+        {
+          "client_id": "741248829134-61ff440ea6d7p31nf4j35l7gi042ugri.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCaCngRGLjYioiwI5j83AhwqiTZYa6t4z0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "741248829134-61ff440ea6d7p31nf4j35l7gi042ugri.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
