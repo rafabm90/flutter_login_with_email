@@ -31,7 +31,7 @@ dependencies:
   flutter_modular: ^2.0.1
   mobx: ^2.0.1
   flutter_mobx: 
-  dartz: ^0.10.0-nullsafety.1
+  dartz: 
   equatable: ^2.0.0
   connectivity: ^3.0.3
   json_annotation: ^4.0.1
