@@ -1,10 +1,10 @@
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter_login_page/app/core/errors/erros.dart';
+import 'package:flutter_login_page/app/modules/login/infra/repositories/login_repository_impl.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import '../../../../modules/login/domain/repositories/login_repository.dart';
 
-//part 'logout.g.dart';
+part 'logout.g.dart';
 
 
 abstract class Logout{

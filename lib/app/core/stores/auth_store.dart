@@ -1,8 +1,10 @@
-import 'package:asuka/asuka.dart' as asuka;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_login_page/app/modules/login/domain/usecases/get_logged_user.dart';
+import 'package:flutter_login_page/app/modules/login/domain/usecases/logout.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+import 'package:asuka/asuka.dart' as asuka;
 
 part 'auth_store.g.dart';
 
@@ -10,27 +12,34 @@ part 'auth_store.g.dart';
 class AuthStore = _AuthStoreBase with _$AuthStore;
 
 abstract class _AuthStoreBase with Store {
-  FirebaseAuth auth = FirebaseAuth.instance;
+  final GetLoggedUser getLoggedUser;
+  final Logout logout;
+
+  _AuthStoreBase(this.getLoggedUser, this.logout);
 
   @observable
-  UserCredential userCredential;
+  User user;
 
   @action
-  void setUserCredential(UserCredential value) => userCredential = value;
+  void setUser(User value) => user = value;
 
-  Future loginWithEmail(String email, String password) async {
-    final userCredential =
-        await auth.signInWithEmailAndPassword(email: email, password: password);
-    setUserCredential(userCredential);
-    //await auth.currentUser.updateProfile(displayName: 'Rafael');
-    //await auth.currentUser.updateProfile(displayName: 'Joao');
-    await auth.currentUser.updateProfile(
-        photoURL: 'https://avatars.githubusercontent.com/u/70381610?v=4');
+  Future<bool> checkLogin() async {
+    var result = await getLoggedUser();
+    return result.fold((l) {
+      return false;
+    }, (user) {
+      setUser(user);
+      return true;
+    });
   }
 
   Future signOut() async {
-    setUserCredential(null);
-    await auth.signOut();
-    Modular.to.pushNamedAndRemoveUntil('/login', (_) => false);
+    var result = await logout();
+    result.fold((l) {
+      asuka.showSnackBar(SnackBar(content: Text('error')));
+    }, (user) {
+      setUser(null);
+      Modular.to.pushNamedAndRemoveUntil('/login', (_) => false);
+    });
   }
 }

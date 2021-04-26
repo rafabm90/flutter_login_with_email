@@ -1,11 +1,13 @@
+import 'package:asuka/asuka.dart' as asuka;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_login_page/app/core/stores/auth_store.dart';
-import 'package:flutter_login_page/app/modules/home/presentation/home_controller.dart';
+import 'package:flutter_login_page/app/modules/login/domain/entities/login_validator.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:asuka/asuka.dart' as asuka;
+import 'package:flutter_login_page/app/modules/login/domain/usecases/login_with_email.dart';
+import 'package:flutter_login_page/app/core/errors/erros.dart';
+import 'package:flutter_login_page/app/core/stores/auth_store.dart';
 
 part 'login_controller.g.dart';
 
@@ -13,8 +15,13 @@ part 'login_controller.g.dart';
 class LoginController = _LoginControllerBase with _$LoginController;
 
 abstract class _LoginControllerBase with Store {
-  final AuthStore auth;
-  _LoginControllerBase(this.auth);
+  final AuthStore authStore;
+  final LoginWithEmail loginWithEmailUseCase;
+
+  _LoginControllerBase(
+    this.authStore,
+    this.loginWithEmailUseCase,
+  );
 
   @observable
   String email = '';
@@ -31,19 +38,16 @@ abstract class _LoginControllerBase with Store {
   @action
   void setCurrentMessage(String value) => currentMessage = value;
 
-  Future enterLogin() async {
-    try {
-      await auth.loginWithEmail(email, password);
+  @computed 
+  LoginValidator get loginValidator => LoginValidator.withData(email: email, password: password,);
 
-      if (auth.userCredential != null) {
-        Modular.to.pushNamedAndRemoveUntil('/home', (_) => false);
-      }
-    } on FirebaseAuthException catch (e) {
-      setCurrentMessage("Credenciais Inválidas.");
+  Future enterLogin() async{
+    var result = await loginWithEmailUseCase(loginValidator);
+    result.fold((failure){
       asuka.showDialog(builder: (context) {
         return AlertDialog(
           title: Text('Erro'),
-          content: Text('Login e/ou Senha inválido(s).'),
+          content: Text(failure.message),
           actions: <Widget>[
             TextButton(
               child: Text('Ok'),
@@ -54,6 +58,11 @@ abstract class _LoginControllerBase with Store {
           ],
         );
       });
-    }
+    },(user){
+      authStore.setUser(user);
+      Modular.to.pushNamedAndRemoveUntil('/home', (_) => false);
+    });
+
   }
+
 }

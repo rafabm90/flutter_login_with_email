@@ -13,12 +13,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 class AppModule extends MainModule {
   @override
   List<Bind> get binds => [
-        Bind((i) => AuthStore()),
+        ...LoginModule.export,
+        $AuthStore,
+        Bind((i) => FirebaseAuth.instance),
       ];
 
   @override
   List<ModularRouter> get routers => [
-        ModularRouter('/', child: (_,__) => SplashScreenPage()),
+        ModularRouter('/', child: (_, __) => SplashScreenPage()),
         ModularRouter('/login', module: LoginModule()),
         ModularRouter('/home', module: HomeModule()),
       ];

@@ -10,16 +10,15 @@ class SplashScreenPage extends StatefulWidget {
 }
 
 splashScreenPage() {
-  Future.delayed(Duration(seconds: 3)).whenComplete(() => {
-        if (Modular.get<AuthStore>().userCredential?.user?.uid != null)
-          {Modular.to.pushNamedAndRemoveUntil("/home", (_) => false)}
-        else
-          {Modular.to.pushNamedAndRemoveUntil("/login", (_) => false)}
+  Future.delayed(Duration(seconds: 3)).whenComplete(() async {
+        bool isLogged = await Modular.get<AuthStore>().checkLogin();
+          isLogged
+            ? Modular.to.pushNamedAndRemoveUntil("/home", (_) => false)
+            : Modular.to.pushNamedAndRemoveUntil("/login", (_) => false);
       });
 }
 
 class _SplashScreenPageState extends State<SplashScreenPage> {
-  
   @override
   void initState() {
     super.initState();
@@ -40,7 +39,6 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
               child: Image.asset('assets/images/computador.png'),
             ),
             SizedBox(height: 30),
-
             SpinKitSquareCircle(
               color: AppTheme.appColor,
             ),

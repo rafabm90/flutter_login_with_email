@@ -6,7 +6,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_login_page/app/core/stores/auth_store.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 class HomePage extends StatefulWidget {
   @override
@@ -18,9 +18,9 @@ class _HomePageState extends ModularState<StatefulWidget, HomeController> {
 
   @override
   void initState() {
-    controller.setUid(_authStore.userCredential.user.uid);
-    controller.setNameUser(_authStore.userCredential.user.displayName);
-    controller.setUrlImage(_authStore.userCredential.user.photoURL);
+    controller.setUid(_authStore.user.uid);
+    controller.setNameUser(_authStore.user.displayName);
+    controller.setUrlImage(_authStore.user.photoURL);
     super.initState();
   }
 
@@ -53,22 +53,13 @@ class _HomePageState extends ModularState<StatefulWidget, HomeController> {
             Center(
               child: Text(
                 'Welcome ${controller.nameUser}',
-                style: GoogleFonts.notoSans(
-                  textStyle: TextStyle(
-                    fontSize: 30,
-                  ),
-                ),
+                style: TextStyle(fontSize: 17),
               ),
             ),
             Center(
               child: Text(
                 'Uid: ${controller.uid}',
-                style: GoogleFonts.roboto(
-                  textStyle: TextStyle(
-                    fontSize: 20,
-                  ),
-
-                ),
+                style: TextStyle(fontSize: 17),
               ),
             ),
             Center(

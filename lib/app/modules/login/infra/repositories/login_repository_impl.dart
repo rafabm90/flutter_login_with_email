@@ -1,41 +1,59 @@
-
-
-
 import 'package:dartz/dartz.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_login_page/app/core/errors/erros.dart';
-import 'package:flutter_login_page/app/modules/login/domain/entities/logged_user_info.dart';
-import 'package:flutter_login_page/app/modules/login/domain/errors/erros.dart';
-import 'package:flutter_login_page/app/modules/login/domain/repositories/login_repository.dart';
-import 'package:flutter_login_page/app/modules/login/infra/repositories/datasource/login_datasource.dart';
+import 'package:flutter_login_page/app/core/errors/messages.dart';
+import 'package:flutter_login_page/app/modules/login/domain/errors/errors.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-//part 'login_repository_impl.g.dart';
+part 'login_repository_impl.g.dart';
+
+abstract class LoginRepository {
+  Future<Either<Failure, User>> loggedUser();
+
+  Future<Either<Failure, Unit>> logout();
+
+  Future<Either<Failure, User>> loginWithEmail({String email, String password});
+}
 
 @Injectable(singleton: false)
-class LoginRepositoryImpl implements LoginRepository{
-  final LoginDataSource dataSource;
+class LoginRepositoryImpl implements LoginRepository {
+  final FirebaseAuth auth;
 
-  LoginRepositoryImpl(this.dataSource);
+  LoginRepositoryImpl(this.auth);
 
   @override
-  Future<Either<Failure, LoggedUserInfo>> loggedUser() async {
-    try{
-      var user = await dataSource.currentUser();
+  Future<Either<Failure, User>> loggedUser() async {
+    try {
+      var user = await auth.currentUser;
+      if (user == null) {
+        return Left(ErrorGetLoggedUser(
+            message: Messages.FAILED_TO_RECOVER_USER_LOGGED));
+      }
       return Right(user);
-    }catch(e){
-      return Left(ErrorGetLoggedUser(e));
+    } catch (e) {
+      return Left(
+          ErrorGetLoggedUser(message: Messages.FAILED_TO_RECOVER_USER_LOGGED));
     }
-    
   }
 
   @override
   Future<Either<Failure, Unit>> logout() async {
-    try{
-      await dataSource.logout();
+    try {
+      await auth.signOut();
       return Right(unit);
-    }catch(e){
-      return Left(ErrorLogout(e));
+    } catch (e) {
+      return Left(ErrorLogout(message: Messages.FAILED_TO_LOGOUT));
     }
-   
+  }
+
+  Future<Either<Failure, User>> loginWithEmail(
+      {String email, String password}) async {
+    try {
+      var userCredential = await auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      return Right(userCredential?.user);
+    } catch (e) {
+      return Left(ErrorLogin(message: Messages.FAILED_TO_LOGIN));
+    }
   }
 }

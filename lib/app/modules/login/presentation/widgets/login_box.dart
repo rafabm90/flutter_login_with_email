@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login_page/app/app_theme.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_login_page/app/modules/login/presentation/login_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -41,17 +42,24 @@ class _LoginBoxState extends ModularState<StatefulWidget, LoginController> {
             onChanged: controller.setPassword,
             iconBox: Icon(Icons.lock, size: 16),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Text(
-                controller.currentMessage,
-                style: TextStyle(
-                  fontSize: 10,
-                  color: AppTheme.adviceColor,
+          Observer(
+            builder: (_) {
+              return Padding(
+                padding: const EdgeInsets.only(top: 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      controller.currentMessage,
+                      style: TextStyle(
+                        fontSize: 10,
+                        color: AppTheme.adviceColor,
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
+              );
+            }
           ),
         ],
       ),

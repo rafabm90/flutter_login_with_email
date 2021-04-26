@@ -8,5 +8,6 @@ class Messages {
   static String get FAILED_TO_RECOVER_USER_LOGGED => "Error ao tentar recuperar informações do usuário.";
   static String get FAILED_TO_LOGOUT => "Error ao tentar fazer logout.";
   static String get INVALID_ACCOUNT_IS_USED => "Esta conta já está sendo usada, por favor use outra conta.";
+  static String get INVALID_EMAIL => "Email Inválido";
 
 }
