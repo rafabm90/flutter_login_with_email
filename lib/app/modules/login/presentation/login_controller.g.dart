@@ -19,6 +19,14 @@ final $LoginController = BindInject(
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$LoginController on _LoginControllerBase, Store {
+  Computed<LoginValidator> _$loginValidatorComputed;
+
+  @override
+  LoginValidator get loginValidator => (_$loginValidatorComputed ??=
+          Computed<LoginValidator>(() => super.loginValidator,
+              name: '_LoginControllerBase.loginValidator'))
+      .value;
+
   final _$emailAtom = Atom(name: '_LoginControllerBase.email');
 
   @override
@@ -106,7 +114,8 @@ mixin _$LoginController on _LoginControllerBase, Store {
     return '''
 email: ${email},
 password: ${password},
-currentMessage: ${currentMessage}
+currentMessage: ${currentMessage},
+loginValidator: ${loginValidator}
     ''';
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter_login_page/app/core/pages/splash_screen_page.dart';
 import 'package:flutter_login_page/app/modules/home/home_module.dart';
 
 import 'package:flutter_login_page/app/modules/login/login_module.dart';
+import 'package:flutter_login_page/app/modules/register/register_module.dart';
 
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_login_page/app/core/stores/auth_store.dart';
@@ -23,6 +24,7 @@ class AppModule extends MainModule {
         ModularRouter('/', child: (_, __) => SplashScreenPage()),
         ModularRouter('/login', module: LoginModule()),
         ModularRouter('/home', module: HomeModule()),
+        ModularRouter('/register', module: RegisterModule()),
       ];
 
   @override

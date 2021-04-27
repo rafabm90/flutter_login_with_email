@@ -65,4 +65,8 @@ abstract class _LoginControllerBase with Store {
 
   }
 
+  Future enterRegister() async {
+    Modular.to.pushNamedAndRemoveUntil('/register', (_) => false);
+  }
+
 }

@@ -51,6 +51,9 @@ class LoginRepositoryImpl implements LoginRepository {
     try {
       var userCredential = await auth.signInWithEmailAndPassword(
           email: email, password: password);
+      if (userCredential == null) {
+        return Left(ErrorLogin(message: Messages.FAILED_TO_LOGIN));
+      }
       return Right(userCredential?.user);
     } catch (e) {
       return Left(ErrorLogin(message: Messages.FAILED_TO_LOGIN));

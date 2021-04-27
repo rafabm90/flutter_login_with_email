@@ -5,12 +5,15 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_login_page/app/modules/login/presentation/login_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class LoginBox extends StatefulWidget {
+class FormBox extends StatefulWidget {
+  final Widget child;
+
+  const FormBox({Key key, this.child}) : super(key: key);
   @override
-  _LoginBoxState createState() => _LoginBoxState();
+  _FormBoxState createState() => _FormBoxState();
 }
 
-class _LoginBoxState extends ModularState<StatefulWidget, LoginController> {
+class _FormBoxState extends State<FormBox> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,45 +31,10 @@ class _LoginBoxState extends ModularState<StatefulWidget, LoginController> {
           ),
         ],
       ),
-      child: Column(
-        children: <Widget>[
-          CustomText(
-            obscureText: false,
-            text: 'E-mail',
-            onChanged: controller.setEmail,
-            iconBox: Icon(Icons.person, size: 16),
-          ),
-          CustomText(
-            obscureText: true,
-            text: 'Senha',
-            onChanged: controller.setPassword,
-            iconBox: Icon(Icons.lock, size: 16),
-          ),
-          Observer(
-            builder: (_) {
-              return Padding(
-                padding: const EdgeInsets.only(top: 5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      controller.currentMessage,
-                      style: TextStyle(
-                        fontSize: 10,
-                        color: AppTheme.adviceColor,
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }
-          ),
-        ],
-      ),
+      child: widget.child,
     );
   }
 }
-
 class CustomText extends StatelessWidget {
   final bool obscureText;
 

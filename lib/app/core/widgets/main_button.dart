@@ -16,7 +16,7 @@ class MainButton extends StatelessWidget {
     return Container(
       width: 355,
       height: 42,
-      margin: EdgeInsets.only(bottom: 0, top: 53),
+      margin: EdgeInsets.only(bottom: 0, top: 35),
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(

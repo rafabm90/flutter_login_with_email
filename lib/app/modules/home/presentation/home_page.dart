@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login_page/app/app_theme.dart';
+import 'package:flutter_login_page/app/core/widgets/main_button.dart';
 import 'package:flutter_login_page/app/modules/home/presentation/home_controller.dart';
-import 'package:flutter_login_page/app/modules/login/presentation/widgets/main_button.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:firebase_auth/firebase_auth.dart';
