@@ -42,7 +42,7 @@ class _RegisterPageState
                           child: formRegister(),
                         ),
                         MainButton(
-                          onPressed: null,
+                          onPressed: controller.register,
                           text: "Proximo",
                           buttonColor: AppTheme.loginButtonColor,
                         ),
@@ -66,19 +66,19 @@ class _RegisterPageState
           CustomText(
             obscureText: false,
             text: 'Nome',
-            onChanged: null,
+            onChanged: controller.setName,
             iconBox: Icon(Icons.person, size: 16),
           ),
           CustomText(
             obscureText: false,
             text: 'E-mail',
-            onChanged: null,
+            onChanged: controller.setEmail,
             iconBox: Icon(Icons.email, size: 16),
           ),
           CustomText(
             obscureText: true,
             text: 'Senha',
-            onChanged: null,
+            onChanged: controller.setPassword,
             iconBox: Icon(Icons.lock, size: 16),
           ),
         ],

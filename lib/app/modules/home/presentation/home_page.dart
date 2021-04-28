@@ -20,16 +20,13 @@ class _HomePageState extends ModularState<StatefulWidget, HomeController> {
   void initState() {
     controller.setUid(_authStore.user.uid);
     controller.setNameUser(_authStore.user.displayName);
-    controller.setUrlImage(_authStore.user.photoURL);
+    //controller.setUrlImage(_authStore.user.photoURL);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Observer(builder: (_) {
-      if (controller.urlImage == null) {
-        return Center(child: CircularProgressIndicator());
-      }
       return Scaffold(
         drawer: Drawer(),
         appBar: AppBar(
@@ -43,12 +40,6 @@ class _HomePageState extends ModularState<StatefulWidget, HomeController> {
           children: [
             SizedBox(
               height: 20,
-            ),
-            Center(
-              child: CircleAvatar(
-                backgroundImage: NetworkImage(controller.urlImage),
-                backgroundColor: Colors.black,       
-              ),
             ),
             Center(
               child: Text(

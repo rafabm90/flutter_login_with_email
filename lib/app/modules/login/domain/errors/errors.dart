@@ -21,5 +21,11 @@ class ErrorLogin extends Failure{
 
   ErrorLogin({this.message});
 
+}
+
+class ErrorRegister extends Failure{
+  final String message;
+
+  ErrorRegister({this.message});
 
 }

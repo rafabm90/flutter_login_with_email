@@ -9,5 +9,8 @@ class Messages {
   static String get FAILED_TO_LOGOUT => "Error ao tentar fazer logout.";
   static String get INVALID_ACCOUNT_IS_USED => "Esta conta já está sendo usada, por favor use outra conta.";
   static String get INVALID_EMAIL => "Email Inválido";
+  static String get INVALID_PASSWORD => "Senha deve possuir 7 ou mais caracteres";
+  static String get INVALID_NAME => "Nome deve possuir 3 ou mais letras";
+  static String get FAILED_TO_REGISTER => "Falha no registro";
 
 }
